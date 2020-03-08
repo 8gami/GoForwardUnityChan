@@ -11,9 +11,6 @@ public class CubeController : MonoBehaviour
     // 消滅位置
     private float deadLine = -10;
 
-    //【課題用】地面の位置
-    //private float groundLevel = -3.0f;
-
     //【課題用】音声ファイル用の変数を設定
     public AudioClip SE1;
     //【課題用】AudioSourceのコンポーネント取得用変数を設定
@@ -41,9 +38,24 @@ public class CubeController : MonoBehaviour
     }
 
     //【課題用】「BoxCollider2D」をアタッチしているオブジェクトで使用する関数は、「OnCollisionEnter」ではなく「OnCollisionEnter2D」
+    //【3月12日メンタリング用】collision:Collision2D
     void OnCollisionEnter2D(Collision2D collision)
     {
-        audioSource.PlayOneShot(SE1);
+        //【3月12日メンタリング用】「引数」が「Collision」系なので、「OnTriggerEnter2D」と違い「collision.gameObject」から「tag」の情報を入手
+        if (collision.gameObject.tag == "Cube")
+        {
+            //Debug.Log("キューブ");
+            audioSource.PlayOneShot(SE1);
+        }
+        else if(collision.gameObject.tag == "ground")
+        {
+            //Debug.Log("地面");
+            audioSource.PlayOneShot(SE1);
+        }
+        //Unityちゃんとの衝突で音が鳴らないかの確認用
+        //else if (collision.gameObject.tag == "Player")
+        //{
+            //Debug.Log("人");
+        //}
     }
-
 }
